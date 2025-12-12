@@ -11,10 +11,10 @@ export function Hero() {
           <span className="text-foreground-secondary/70">Windows & Linux coming soon</span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-6">
+        <h1 className="text-5xl md:text-7xl font-semibold tracking-tight">
           Your screen,
           <br />
-          <span className="gradient-text">supercharged.</span>
+          <span className="gradient-text pb-2">supercharged.</span>
         </h1>
 
         <p className="text-xl md:text-2xl text-foreground-secondary max-w-2xl mx-auto mb-6 leading-relaxed">

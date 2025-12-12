@@ -17,7 +17,7 @@ const plans = [
     featured: false,
   },
   {
-    name: "Pro",
+    name: "Licence",
     price: "$7.99",
     period: "one-time",
     description: "Unlimited access forever",
@@ -25,7 +25,6 @@ const plans = [
       "Unlimited captures",
       "All tools included",
       "2 devices per license",
-      "Priority support",
       "Future updates",
       "Offline license",
     ],
@@ -54,7 +53,7 @@ export function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative p-8 rounded-3xl ${
+              className={`relative p-8 rounded-3xl flex flex-col ${
                 plan.featured
                   ? "bg-foreground text-background ring-2 ring-primary"
                   : "bg-background"
@@ -86,7 +85,7 @@ export function Pricing() {
                 )}
               </div>
 
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-8 grow-1">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-center gap-3">
                     <svg
@@ -122,7 +121,7 @@ export function Pricing() {
         </div>
 
         <p className="text-center text-foreground-secondary text-sm mt-12">
-          One license covers 2 devices. Contact support for additional activations.
+          One license covers 2 devices.
         </p>
       </div>
     </section>
