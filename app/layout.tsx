@@ -1,7 +1,9 @@
-import "./globals.css";
+import "./global.css";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import { ThemeProvider } from "./components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,8 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Snappit — Screenshot Tools, Reimagined",
-    description:
-      "A powerful macOS screen capture utility that goes beyond simple screenshots.",
+    description: "A powerful macOS screen capture utility that goes beyond simple screenshots.",
   },
 };
 
@@ -51,7 +52,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
