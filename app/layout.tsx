@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Snappit — Screenshot Tools, Reimagined",
+  title: "Snappit — Simplify your screen workflow",
   description:
     "Capture any region of your screen and instantly extract text, scan QR codes, pick colors, and measure pixels with precision. A powerful macOS screen capture utility.",
   keywords: [

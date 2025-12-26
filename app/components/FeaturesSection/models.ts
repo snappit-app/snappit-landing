@@ -1,5 +1,8 @@
+export type featureId = "ocr" | "color-picker" | "screen-ruler" | "qr-scanner";
+
 export interface Feature {
   title: string;
+  id: featureId;
   description: string;
   icon: string;
   iconAlt: string;
@@ -9,6 +12,7 @@ export interface Feature {
 export const features: Feature[] = [
   {
     title: "OCR",
+    id: "ocr",
     description: "Extract text from any screen region",
     icon: "/copy.svg",
     iconAlt: "OCR icon",
@@ -16,6 +20,7 @@ export const features: Feature[] = [
   },
   {
     title: "Color Picker",
+    id: "color-picker",
     description: "Pick colors in HEX, RGB, HSL, OKLCH",
     icon: "/color-dropper.svg",
     iconAlt: "Color picker icon",
@@ -23,6 +28,7 @@ export const features: Feature[] = [
   },
   {
     title: "Screen Ruler",
+    id: "screen-ruler",
     description: "Measure pixels with precision",
     icon: "/ruler.svg",
     iconAlt: "Ruler icon",
@@ -30,6 +36,7 @@ export const features: Feature[] = [
   },
   {
     title: "QR Scanner",
+    id: "qr-scanner",
     description: "Scan and decode QR codes instantly",
     icon: "/qr.svg",
     iconAlt: "QR code icon",
@@ -37,6 +44,7 @@ export const features: Feature[] = [
   },
   {
     title: "Shortcuts",
+    id: "shortcuts",
     description: "Scan and decode QR codes instantly",
     icon: "/qr.svg",
     iconAlt: "QR code icon",

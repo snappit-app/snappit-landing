@@ -19,9 +19,7 @@ export function HeroSection() {
         </div>
 
         {/* Title */}
-        <h1 className="mb-4 text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-          Snappit
-        </h1>
+        <h1 className="mb-4 text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">Snappit</h1>
 
         {/* Tagline */}
         <p className="text-muted-foreground mb-8 max-w-md text-lg md:text-xl">
@@ -54,9 +52,7 @@ export function HeroSection() {
         </div>
 
         {/* Platform note */}
-        <p className="text-muted-foreground mb-8 text-sm">
-          Windows &amp; Linux coming soon
-        </p>
+        <p className="text-muted-foreground mb-8 text-sm">Windows &amp; Linux coming soon</p>
 
         {/* Watch Demo Button */}
         <button className="text-muted-foreground hover:text-foreground hover:bg-muted inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors">
