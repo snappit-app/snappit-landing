@@ -1,4 +1,4 @@
-export type featureId = "ocr" | "color-picker" | "screen-ruler" | "qr-scanner";
+export type featureId = "ocr" | "color-picker" | "screen-ruler" | "qr-scanner" | "shortcuts";
 
 export interface Feature {
   title: string;
