@@ -4,9 +4,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const COLORS = [
-  { hex: "#FF5D5F", name: "Indigo" }, // Indigo
-  { hex: "#FBC802", name: "Amber" }, // Amber
-  { hex: "#35C759", name: "Emerald" }, // Emerald
+  {
+    cssVar: "var(--color-picker-1)",
+    displayValue: "#FFFFFF",
+    foreground: "var(--color-picker-1-foreground)",
+  },
+  {
+    cssVar: "var(--color-picker-2)",
+    displayValue: "#939293",
+    foreground: "var(--color-picker-2-foreground)",
+  },
+  {
+    cssVar: "var(--color-picker-3)",
+    displayValue: "#629DFF",
+    foreground: "var(--color-picker-3-foreground)",
+  },
 ];
 
 type Phase = "idle" | "clicking" | "colorCopied" | "moving";
@@ -18,7 +30,7 @@ function delay(ms: number): Promise<void> {
 export function ColorPickerAnimation() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [copiedColor, setCopiedColor] = useState<string>(COLORS[0].hex);
+  const [copiedColorIndex, setCopiedColorIndex] = useState<number>(0);
   const [showPanel, setShowPanel] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,7 +77,7 @@ export function ColorPickerAnimation() {
       // Reset state
       setPhase("idle");
       setShowPanel(false);
-      setCopiedColor(COLORS[0].hex);
+      setCopiedColorIndex(0);
 
       await delay(500);
       checkAborted();
@@ -102,7 +114,7 @@ export function ColorPickerAnimation() {
 
         // Цвет скопирован - показываем/обновляем панель
         setPhase("colorCopied");
-        setCopiedColor(COLORS[colorIndex].hex);
+        setCopiedColorIndex(colorIndex);
         setShowPanel(true);
 
         await delay(1500);
@@ -186,9 +198,9 @@ export function ColorPickerAnimation() {
           className="relative h-24 w-24 overflow-hidden rounded-full shadow-lg"
           style={{
             background: `conic-gradient(
-              ${COLORS[0].hex} 0deg 120deg,
-              ${COLORS[1].hex} 120deg 240deg,
-              ${COLORS[2].hex} 240deg 360deg
+              ${COLORS[0].cssVar} 0deg 120deg,
+              ${COLORS[1].cssVar} 120deg 240deg,
+              ${COLORS[2].cssVar} 240deg 360deg
             )`,
           }}
         />
@@ -209,18 +221,18 @@ export function ColorPickerAnimation() {
           >
             <motion.div
               className="border-border flex items-center gap-3 rounded-lg border px-3 py-2 shadow-lg"
-              animate={{ backgroundColor: copiedColor }}
+              animate={{ backgroundColor: COLORS[copiedColorIndex].cssVar }}
               transition={{ duration: 0.3 }}
             >
               <motion.span
-                className="font-mono text-sm font-medium text-white"
-                style={{ textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
-                key={copiedColor}
+                className="font-mono text-sm font-medium"
+                style={{ color: COLORS[copiedColorIndex].foreground }}
+                key={copiedColorIndex}
                 initial={{ opacity: 0.5 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
               >
-                {copiedColor}
+                {COLORS[copiedColorIndex].displayValue}
               </motion.span>
             </motion.div>
           </motion.div>
