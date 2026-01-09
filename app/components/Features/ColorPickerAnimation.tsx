@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const COLORS = [
-  { hex: "#FF5D5F", name: "Indigo" },
-  { hex: "#FBC802", name: "Amber" },
-  { hex: "#35C759", name: "Emerald" },
+  { hex: "#FF5D5F", name: "Indigo" }, // Indigo
+  { hex: "#FBC802", name: "Amber" }, // Amber
+  { hex: "#35C759", name: "Emerald" }, // Emerald
 ];
 
 type Phase = "idle" | "clicking" | "colorCopied" | "moving";
@@ -25,19 +25,26 @@ export function ColorPickerAnimation() {
   const colorWheelRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Вычисляем позиции для каждого цвета на круге
   const getColorPosition = useCallback(
     (index: number, containerRect: DOMRect, wheelRect: DOMRect) => {
       const wheelCenterX = wheelRect.left - containerRect.left + wheelRect.width / 2;
       const wheelCenterY = wheelRect.top - containerRect.top + wheelRect.height / 2;
-      const radius = wheelRect.width / 3;
+      const radius = wheelRect.width / 3; // Радиус для позиционирования курсора
 
-      const cssAngles = [60, 180, 300];
-      const angle = 90 - cssAngles[index];
+      // Углы для трех секторов - центры секторов conic-gradient
+      // conic-gradient начинается сверху (0deg = 12 часов) и идет по часовой стрелке
+      // Сектор 0: 0-120deg, центр = 60deg
+      // Сектор 1: 120-240deg, центр = 180deg
+      // Сектор 2: 240-360deg, центр = 300deg
+      // Переводим в стандартные углы (0 = вправо, против часовой): угол = 90 - cssУгол
+      const cssAngles = [60, 180, 300]; // градусы в CSS (от верха по часовой)
+      const angle = 90 - cssAngles[index]; // перевод в стандартную систему координат
       const angleRad = (angle * Math.PI) / 180;
 
       return {
         x: wheelCenterX + radius * Math.cos(angleRad),
-        y: wheelCenterY - radius * Math.sin(angleRad),
+        y: wheelCenterY - radius * Math.sin(angleRad), // минус потому что Y идет вниз
       };
     },
     [],
@@ -54,83 +61,94 @@ export function ColorPickerAnimation() {
       }
     };
 
-    setPhase("idle");
-    setShowPanel(false);
-    setCopiedColor(COLORS[0].hex);
-
-    await delay(500);
-    checkAborted();
-
-    const containerEl = containerRef.current;
-    const wheelEl = colorWheelRef.current;
-    if (!containerEl || !wheelEl) return;
-
-    const containerRect = containerEl.getBoundingClientRect();
-    const wheelRect = wheelEl.getBoundingClientRect();
-
-    let colorIndex = 0;
-
-    const initialPos = getColorPosition(colorIndex, containerRect, wheelRect);
-    setCursorPos(initialPos);
-
-    await delay(300);
-    checkAborted();
-
-    while (true) {
-      checkAborted();
-
+    try {
+      // Reset state
       setPhase("idle");
+      setShowPanel(false);
+      setCopiedColor(COLORS[0].hex);
 
-      await delay(600);
+      await delay(500);
       checkAborted();
 
-      setPhase("clicking");
-      await delay(150);
+      const containerEl = containerRef.current;
+      const wheelEl = colorWheelRef.current;
+      if (!containerEl || !wheelEl) return;
+
+      const containerRect = containerEl.getBoundingClientRect();
+      const wheelRect = wheelEl.getBoundingClientRect();
+
+      let colorIndex = 0;
+
+      // Начальная позиция курсора
+      const initialPos = getColorPosition(colorIndex, containerRect, wheelRect);
+      setCursorPos(initialPos);
+
+      await delay(300);
       checkAborted();
 
-      setPhase("colorCopied");
-      setCopiedColor(COLORS[colorIndex].hex);
-      setShowPanel(true);
+      // Бесконечный цикл по цветам
+      while (true) {
+        checkAborted();
 
-      await delay(1500);
-      checkAborted();
+        setPhase("idle");
 
-      const nextColorIndex = (colorIndex + 1) % COLORS.length;
-      const currentPos = getColorPosition(colorIndex, containerRect, wheelRect);
-      const nextPos = getColorPosition(nextColorIndex, containerRect, wheelRect);
+        await delay(600);
+        checkAborted();
 
-      setPhase("moving");
+        // Анимация клика
+        setPhase("clicking");
+        await delay(150);
+        checkAborted();
 
-      const moveDuration = 500;
-      const startTime = Date.now();
+        // Цвет скопирован - показываем/обновляем панель
+        setPhase("colorCopied");
+        setCopiedColor(COLORS[colorIndex].hex);
+        setShowPanel(true);
 
-      await new Promise<void>((resolve) => {
-        const animateMove = () => {
-          if (controller.signal.aborted) {
-            resolve();
-            return;
-          }
+        await delay(1500);
+        checkAborted();
 
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min(elapsed / moveDuration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
+        // Переход к следующему цвету
+        const nextColorIndex = (colorIndex + 1) % COLORS.length;
+        const currentPos = getColorPosition(colorIndex, containerRect, wheelRect);
+        const nextPos = getColorPosition(nextColorIndex, containerRect, wheelRect);
 
-          setCursorPos({
-            x: currentPos.x + (nextPos.x - currentPos.x) * eased,
-            y: currentPos.y + (nextPos.y - currentPos.y) * eased,
-          });
+        setPhase("moving");
 
-          if (progress < 1) {
-            requestAnimationFrame(animateMove);
-          } else {
-            resolve();
-          }
-        };
+        // Анимируем перемещение курсора
+        const moveDuration = 500;
+        const startTime = Date.now();
 
-        requestAnimationFrame(animateMove);
-      });
+        await new Promise<void>((resolve) => {
+          const animateMove = () => {
+            if (controller.signal.aborted) {
+              resolve();
+              return;
+            }
 
-      colorIndex = nextColorIndex;
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / moveDuration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+
+            setCursorPos({
+              x: currentPos.x + (nextPos.x - currentPos.x) * eased,
+              y: currentPos.y + (nextPos.y - currentPos.y) * eased,
+            });
+
+            if (progress < 1) {
+              requestAnimationFrame(animateMove);
+            } else {
+              resolve();
+            }
+          };
+
+          requestAnimationFrame(animateMove);
+        });
+
+        colorIndex = nextColorIndex;
+      }
+    } catch {
+      // Animation was aborted
     }
   }, [getColorPosition]);
 
@@ -181,7 +199,7 @@ export function ColorPickerAnimation() {
         {showPanel && (
           <motion.div
             className="absolute bottom-6 left-1/2 z-30"
-            initial={{ opacity: 0, y: 20, x: "-50%", scale: 0.9 }}
+            initial={{ opacity: 0, y: 20, x: "-50%", scale: 0.85 }}
             animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
             transition={{
               type: "spring",
@@ -223,7 +241,7 @@ export function ColorPickerAnimation() {
               left: cursorPos.x,
               top: cursorPos.y,
               opacity: 1,
-              scale: phase === "clicking" ? 0.8 : 1,
+              scale: phase === "clicking" ? 0.9 : 1,
             }}
             exit={{ opacity: 0 }}
             transition={{

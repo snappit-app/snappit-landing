@@ -1,6 +1,7 @@
 "use client";
 
 import { ColorPickerAnimation } from "./ColorPickerAnimation";
+import { QrScannerAnimation } from "./QrScannerAnimation";
 import { RulerAnimation } from "./RulerAnimation";
 import { TextSelectionAnimation } from "./TextSelectionAnimation";
 
@@ -101,6 +102,7 @@ const features: FeatureCardProps[] = [
     icon: <QrIcon />,
     title: "QR Scanner",
     description: "Scan QR codes directly from your screen instantly.",
+    animation: <QrScannerAnimation />,
   },
   {
     icon: <KeyboardIcon />,
