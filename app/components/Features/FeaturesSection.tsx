@@ -1,5 +1,6 @@
 "use client";
 
+import { RulerAnimation } from "./RulerAnimation";
 import { TextSelectionAnimation } from "./TextSelectionAnimation";
 
 interface FeatureCardProps {
@@ -87,6 +88,7 @@ const features: FeatureCardProps[] = [
     icon: <RulerIcon />,
     title: "Digital Ruler",
     description: "Measure anything on screen with pixel-perfect precision.",
+    animation: <RulerAnimation />,
   },
   {
     icon: <ColorDropperIcon />,

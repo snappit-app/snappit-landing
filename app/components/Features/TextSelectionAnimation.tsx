@@ -16,6 +16,10 @@ interface SelectionBox {
   height: number;
 }
 
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export function TextSelectionAnimation() {
   const [phase, setPhase] = useState<"idle" | "selecting" | "selected" | "copied">("idle");
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
@@ -23,33 +27,28 @@ export function TextSelectionAnimation() {
 
   const textContainerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
-  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const clearAllTimers = useCallback(() => {
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
-    }
-    timeoutsRef.current.forEach(clearTimeout);
-    timeoutsRef.current = [];
-  }, []);
+  const runAnimation = useCallback(async () => {
+    // Cancel previous animation
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
-  const addTimeout = useCallback((callback: () => void, delay: number) => {
-    const id = setTimeout(callback, delay);
-    timeoutsRef.current.push(id);
-    return id;
-  }, []);
+    const checkAborted = () => {
+      if (controller.signal.aborted) {
+        throw new Error("Animation aborted");
+      }
+    };
 
-  const runAnimation = useCallback(() => {
-    clearAllTimers();
+    try {
+      // Reset state
+      setPhase("idle");
+      setSelectionBox(null);
 
-    // Reset state
-    setPhase("idle");
-    setSelectionBox(null);
+      await delay(800);
+      checkAborted();
 
-    // Start selection after delay
-    addTimeout(() => {
       const textEl = textContainerRef.current;
       const containerEl = containerRef.current;
       if (!textEl || !containerEl) return;
@@ -68,18 +67,24 @@ export function TextSelectionAnimation() {
 
       setCursorPos({ x: startX, y: startY });
 
-      // Small delay before starting selection
-      addTimeout(() => {
-        setPhase("selecting");
+      await delay(500);
+      checkAborted();
 
-        const selectionDuration = 1200;
-        const startTime = Date.now();
+      setPhase("selecting");
 
+      // Animate selection
+      const selectionDuration = 1200;
+      const startTime = Date.now();
+
+      await new Promise<void>((resolve) => {
         const animateSelection = () => {
+          if (controller.signal.aborted) {
+            resolve();
+            return;
+          }
+
           const elapsed = Date.now() - startTime;
           const progress = Math.min(elapsed / selectionDuration, 1);
-
-          // Ease out cubic
           const eased = 1 - Math.pow(1 - progress, 3);
 
           const currentX = startX + (endX - startX) * eased;
@@ -94,34 +99,44 @@ export function TextSelectionAnimation() {
           });
 
           if (progress < 1) {
-            animationFrameRef.current = requestAnimationFrame(animateSelection);
+            requestAnimationFrame(animateSelection);
           } else {
-            // Selection complete
-            setPhase("selected");
-
-            // Show copied notification
-            addTimeout(() => {
-              setPhase("copied");
-
-              // Reset after showing notification
-              addTimeout(() => {
-                runAnimation();
-              }, 2000);
-            }, 500);
+            resolve();
           }
         };
 
-        animationFrameRef.current = requestAnimationFrame(animateSelection);
-      }, 500);
-    }, 800);
-  }, [clearAllTimers, addTimeout]);
+        requestAnimationFrame(animateSelection);
+      });
+
+      checkAborted();
+
+      // Selection complete
+      setPhase("selected");
+
+      await delay(500);
+      checkAborted();
+
+      // Show copied notification
+      setPhase("copied");
+
+      await delay(2000);
+      checkAborted();
+
+      // Restart animation
+      runAnimation();
+    } catch {
+      // Animation was aborted, do nothing
+    }
+  }, []);
 
   useEffect(() => {
     runAnimation();
     return () => {
-      clearAllTimers();
+      abortControllerRef.current?.abort();
     };
-  }, [runAnimation, clearAllTimers]);
+  }, [runAnimation]);
+
+  const showCursor = phase === "idle" || phase === "selecting";
 
   return (
     <div ref={containerRef} className="bg-muted/30 relative h-full w-full overflow-hidden">
@@ -170,34 +185,55 @@ export function TextSelectionAnimation() {
         )}
       </AnimatePresence>
 
-      {/* Native-style crosshair cursor */}
-      <motion.div
-        className="pointer-events-none absolute z-20"
-        style={{
-          left: cursorPos.x,
-          top: cursorPos.y,
-        }}
-        animate={{
-          left: cursorPos.x,
-          top: cursorPos.y,
-        }}
-        transition={{ duration: 0.05 }}
-      >
-        <svg
-          width="19"
-          height="19"
-          viewBox="0 0 19 19"
-          fill="none"
-          className="relative -translate-x-1/2 -translate-y-1/2"
-        >
-          {/* Vertical line */}
-          <line x1="9.5" y1="0" x2="9.5" y2="8" className="stroke-foreground" strokeWidth="1" />
-          <line x1="9.5" y1="11" x2="9.5" y2="19" className="stroke-foreground" strokeWidth="1" />
-          {/* Horizontal line */}
-          <line x1="0" y1="9.5" x2="8" y2="9.5" className="stroke-foreground" strokeWidth="1" />
-          <line x1="11" y1="9.5" x2="19" y2="9.5" className="stroke-foreground" strokeWidth="1" />
-        </svg>
-      </motion.div>
+      {/* Native-style crosshair cursor - hide after selection */}
+      <AnimatePresence>
+        {showCursor && (
+          <motion.div
+            className="pointer-events-none absolute z-20"
+            style={{
+              left: cursorPos.x,
+              top: cursorPos.y,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{
+              left: cursorPos.x,
+              top: cursorPos.y,
+              opacity: 1,
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.05 }}
+          >
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 19 19"
+              fill="none"
+              className="relative -translate-x-1/2 -translate-y-1/2"
+            >
+              {/* Vertical line */}
+              <line x1="9.5" y1="0" x2="9.5" y2="8" className="stroke-foreground" strokeWidth="1" />
+              <line
+                x1="9.5"
+                y1="11"
+                x2="9.5"
+                y2="19"
+                className="stroke-foreground"
+                strokeWidth="1"
+              />
+              {/* Horizontal line */}
+              <line x1="0" y1="9.5" x2="8" y2="9.5" className="stroke-foreground" strokeWidth="1" />
+              <line
+                x1="11"
+                y1="9.5"
+                x2="19"
+                y2="9.5"
+                className="stroke-foreground"
+                strokeWidth="1"
+              />
+            </svg>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Copied notification */}
       <AnimatePresence>
