@@ -46,7 +46,6 @@ export function TextSelectionAnimation() {
       setPhase("idle");
       setSelectionBox(null);
 
-      await delay(800);
       checkAborted();
 
       const textEl = textContainerRef.current;

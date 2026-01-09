@@ -1,5 +1,6 @@
 "use client";
 
+import { ColorPickerAnimation } from "./ColorPickerAnimation";
 import { RulerAnimation } from "./RulerAnimation";
 import { TextSelectionAnimation } from "./TextSelectionAnimation";
 
@@ -94,6 +95,7 @@ const features: FeatureCardProps[] = [
     icon: <ColorDropperIcon />,
     title: "Color Picker",
     description: "Pick colors and copy in HEX, RGB, HSL, and more formats.",
+    animation: <ColorPickerAnimation />,
   },
   {
     icon: <QrIcon />,
