@@ -1,4 +1,4 @@
-export * from "./FeaturesSection";
+export * from "./Features";
 export * from "./Footer";
 export * from "./HeroSection";
 export * from "./RoadmapSection";

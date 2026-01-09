@@ -1,35 +1,21 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { TextSelectionAnimation } from "./TextSelectionAnimation";
 
 interface FeatureCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
+  animation?: React.ReactNode;
 }
 
-function FeatureCard({ icon, title, description }: FeatureCardProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Placeholder - clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }, []);
-
+function FeatureCard({ icon, title, description, animation }: FeatureCardProps) {
   return (
     <div className="bg-card border-border flex h-[370px] flex-col rounded-xl border">
-      {/* Canvas area - 65% height */}
       <div className="relative flex-[0_0_65%] overflow-hidden rounded-t-xl">
-        <canvas ref={canvasRef} className="bg-muted/30 h-full w-full" />
+        {animation ? animation : <div className="bg-muted/30 h-full w-full" />}
       </div>
 
-      {/* Footer with content */}
       <div className="flex flex-1 flex-col justify-center gap-2 p-5">
         <div className="flex items-center gap-3">
           <div className="text-product flex h-8 w-8 shrink-0 items-center justify-center">
@@ -95,6 +81,7 @@ const features: FeatureCardProps[] = [
     icon: <CopyIcon />,
     title: "Text Recognition (OCR)",
     description: "Extract text from your screen with macOS Vision or Tesseract for 100+ languages.",
+    animation: <TextSelectionAnimation />,
   },
   {
     icon: <RulerIcon />,
@@ -122,7 +109,6 @@ export function FeaturesSection() {
   return (
     <section className="px-4 py-16 md:py-24" id="features">
       <div className="mx-auto max-w-5xl">
-        {/* Section Header */}
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">Features</h2>
           <p className="text-muted-foreground mx-auto max-w-xl text-lg">
@@ -130,15 +116,12 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        {/* Features Grid - Row 1: 2 items, Row 2: 3 items */}
         <div className="flex flex-col gap-6">
-          {/* First row - 2 items */}
           <div className="grid gap-6 md:grid-cols-2">
             {features.slice(0, 2).map((feature) => (
               <FeatureCard key={feature.title} {...feature} />
             ))}
           </div>
-          {/* Second row - 3 items */}
           <div className="grid gap-6 md:grid-cols-3">
             {features.slice(2).map((feature) => (
               <FeatureCard key={feature.title} {...feature} />
