@@ -265,10 +265,10 @@ export function KeyboardShortcutsAnimation() {
       <AnimatePresence>
         {showTooltip && (
           <motion.div
-            className="absolute top-1/2 left-1/2 z-30"
-            initial={{ opacity: 0, y: 10, x: "-50%", scale: 0.9 }}
-            animate={{ opacity: 1, y: -60, x: "-50%", scale: 1 }}
-            exit={{ opacity: 0, y: -50, x: "-50%", scale: 0.9 }}
+            className="absolute inset-0 z-30 flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
             transition={{
               type: "spring",
               stiffness: 400,
