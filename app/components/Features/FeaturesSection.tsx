@@ -1,6 +1,7 @@
 "use client";
 
 import { ColorPickerAnimation } from "./ColorPickerAnimation";
+import { KeyboardShortcutsAnimation } from "./KeyboardShortcutsAnimation";
 import { QrScannerAnimation } from "./QrScannerAnimation";
 import { RulerAnimation } from "./RulerAnimation";
 import { TextSelectionAnimation } from "./TextSelectionAnimation";
@@ -108,6 +109,7 @@ const features: FeatureCardProps[] = [
     icon: <KeyboardIcon />,
     title: "Keyboard Shortcuts",
     description: "Dedicated shortcuts for each tool. Access everything instantly.",
+    animation: <KeyboardShortcutsAnimation />,
   },
 ];
 
