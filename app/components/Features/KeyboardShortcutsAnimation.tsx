@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
+const SHORTCUT_KEYS = ["⌘", "⇧", "2"];
 
 type Phase =
   | "idle"
@@ -79,7 +80,7 @@ function KeyboardButton({ keyLabel }: { keyLabel: string }) {
         return <ShiftIcon />;
       default:
         return (
-          <kbd className="text-accent-foreground font-mono text-xs leading-[10px]">{keyLabel}</kbd>
+          <kbd className="text-accent-foreground font-mono text-xs leading-2.5">{keyLabel}</kbd>
         );
     }
   };
@@ -142,8 +143,6 @@ export function KeyboardShortcutsAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
-
-  const SHORTCUT_KEYS = ["⌘", "⇧", "2"]; // Command, Shift, 2
 
   const runAnimation = useCallback(async () => {
     abortControllerRef.current?.abort();

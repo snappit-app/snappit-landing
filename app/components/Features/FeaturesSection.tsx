@@ -84,31 +84,32 @@ const features: FeatureCardProps[] = [
   {
     icon: <CopyIcon />,
     title: "Text Recognition (OCR)",
-    description: "Extract text from your screen with macOS Vision or Tesseract for 100+ languages.",
+    description:
+      "Capture any text from your screen using macOS Vision for native speed or Tesseract with built-in support for 100+ languages.",
     animation: <TextSelectionAnimation />,
   },
   {
     icon: <RulerIcon />,
     title: "Digital Ruler",
-    description: "Measure anything on screen with pixel-perfect precision.",
+    description: "Measure anything on screen with pixel-perfect precision",
     animation: <RulerAnimation />,
   },
   {
     icon: <ColorDropperIcon />,
     title: "Color Picker",
-    description: "Pick colors and copy in HEX, RGB, HSL, and more formats.",
+    description: "Easily pick colors under your cursor in any format you need",
     animation: <ColorPickerAnimation />,
   },
   {
     icon: <QrIcon />,
     title: "QR Scanner",
-    description: "Scan QR codes directly from your screen instantly.",
+    description: "Instant QR scanning, right when you need it",
     animation: <QrScannerAnimation />,
   },
   {
     icon: <KeyboardIcon />,
     title: "Keyboard Shortcuts",
-    description: "Dedicated shortcuts for each tool. Access everything instantly.",
+    description: "Dedicated shortcuts for each tool. Access everything instantly",
     animation: <KeyboardShortcutsAnimation />,
   },
 ];
