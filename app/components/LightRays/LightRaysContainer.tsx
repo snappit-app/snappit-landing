@@ -28,7 +28,7 @@ export function LightRaysContainer() {
     >
       <LightRays
         raysOrigin="top-center"
-        raysColor="#fff"
+        raysColor="#68B2D2"
         raysSpeed={1.5}
         lightSpread={9.8}
         rayLength={0.6}
