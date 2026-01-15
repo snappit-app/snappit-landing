@@ -84,10 +84,10 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="mailto:support@snappit.app"
+                  href="mailto:support@getsnappit.com"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
-                  support@snappit.app
+                  support@getsnappit.com
                 </a>
               </li>
               <li>

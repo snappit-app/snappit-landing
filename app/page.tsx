@@ -1,4 +1,4 @@
-import { FeaturesSection, Footer, HeroSection, RoadmapSection, ThemeToggle } from "./components";
+import { FeaturesSection, Footer, HeroSection, ThemeToggle } from "./components";
 import { LightRaysContainer } from "./components/LightRays";
 
 export default function Home() {
@@ -11,7 +11,6 @@ export default function Home() {
 
       <HeroSection />
       <FeaturesSection />
-      {/*<RoadmapSection />*/}
       <Footer />
     </main>
   );

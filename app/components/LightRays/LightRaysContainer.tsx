@@ -21,7 +21,7 @@ export function LightRaysContainer() {
 
   return (
     <div
-      className="fixed top-0 left-0 -z-1 h-full w-full"
+      className="fixed top-0 left-0 -z-1 hidden h-dvh w-full md:block"
       style={{
         transform: `translateY(-${scrollY}px)`,
       }}

@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Snappit — Simplify your screen workflow",
+  title: "Snappit",
   description:
     "Capture any region of your screen and instantly extract text, scan QR codes, pick colors, and measure pixels with precision. A powerful macOS screen capture utility.",
   keywords: [
@@ -33,15 +33,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Snappit — Simplify your screen workflow",
     description:
-      "Capture any region of your screen and instantly extract text, scan QR codes, pick colors, and measure pixels with precision.",
+      "Capture any region of your screen and instantly extract text, scan QR codes, pick colors, and measure pixels with precision. A powerful macOS screen capture utility.",
     type: "website",
     locale: "en_US",
     siteName: "Snappit",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Snappit — Screenshot Tools, Reimagined",
-    description: "A powerful macOS screen capture utility that goes beyond simple screenshots.",
+    title: "Snappit — Simplify your screen workflow",
+    description:
+      "Capture any region of your screen and instantly extract text, scan QR codes, pick colors, and measure pixels with precision. A powerful macOS screen capture utility.",
   },
 };
 
