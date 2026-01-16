@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Footer, ThemeToggle } from "../components";
 
 export const metadata = {
-  title: "Pricing — Snappit",
+  title: "Snappit - Pricing",
   description:
     "Simple, transparent pricing for Snappit. Try free, then get a lifetime license for $7.99.",
 };
@@ -101,12 +101,12 @@ export default function PricingPage() {
                   <span className="text-sm">Customizable keyboard shortcuts</span>
                 </li>
               </ul>
-              <a
-                href="#download"
+              <Link
+                href="/downloads"
                 className="bg-muted text-foreground hover:bg-muted/80 inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-base font-medium transition-colors"
               >
                 Download Free Trial
-              </a>
+              </Link>
             </div>
 
             {/* Lifetime License */}

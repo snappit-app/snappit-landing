@@ -29,7 +29,7 @@ export function HeroSection() {
         {/* CTA Buttons */}
         <div className="mb-4 flex flex-col gap-3 sm:flex-row">
           <a
-            href="#download"
+            href="https://github.com/snappit-app/snappit/releases/latest/download/snappit_mac_arm.dmg"
             className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-medium transition-colors"
           >
             <svg
@@ -50,6 +50,14 @@ export function HeroSection() {
             Buy Full License — $7.99
           </a>
         </div>
+
+        {/* Intel download link */}
+        <a
+          href="https://github.com/snappit-app/snappit/releases/latest/download/snappit_mac_intel.dmg"
+          className="text-muted-foreground hover:text-foreground mb-4 text-sm underline transition-colors"
+        >
+          Download for macOS Intel
+        </a>
 
         {/* Platform note */}
         <p className="text-muted-foreground mb-8 text-sm">Windows &amp; Linux coming soon</p>

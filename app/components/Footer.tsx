@@ -22,12 +22,12 @@ export function Footer() {
             <h4 className="mb-4 text-sm font-semibold">Product</h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#download"
+                <Link
+                  href="/downloads"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
-                  Download
-                </a>
+                  Downloads
+                </Link>
               </li>
               <li>
                 <a
