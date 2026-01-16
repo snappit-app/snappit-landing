@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -7,10 +8,10 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="mb-4 flex items-center gap-2">
+            <Link href="/" className="mb-4 flex items-center gap-2">
               <Image src="/logo-128.png" alt="Snappit" width={32} height={32} />
               <span className="font-semibold">Snappit</span>
-            </div>
+            </Link>
             <p className="text-muted-foreground text-sm">
               Screen tools for macOS that simplify your workflow.
             </p>
@@ -30,50 +31,50 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#features"
+                  href="/#features"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
                   Features
                 </a>
               </li>
               <li>
-                <a
-                  href="#roadmap"
+                <Link
+                  href="/pricing"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
-                  Roadmap
-                </a>
+                  Pricing
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Legal */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold">Resources</h4>
+            <h4 className="mb-4 text-sm font-semibold">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#docs"
+                <Link
+                  href="/terms"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
-                  Documentation
-                </a>
+                  Terms of Service
+                </Link>
               </li>
               <li>
-                <a
-                  href="#privacy"
+                <Link
+                  href="/privacy"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#terms"
+                <Link
+                  href="/refund-policy"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
-                  Terms of Use
-                </a>
+                  Refund Policy
+                </Link>
               </li>
             </ul>
           </div>
@@ -119,7 +120,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Snappit. All rights reserved.
           </p>
           <p className="text-muted-foreground text-sm">
-            14-day free trial &bull; $7.99 lifetime license
+            Free trial available &bull; $7.99 lifetime license
           </p>
         </div>
       </div>
