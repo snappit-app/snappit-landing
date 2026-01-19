@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default function RefundPolicyPage() {
-  const lastUpdated = "January 16, 2026";
+  const lastUpdated = "January 19, 2026";
 
   return (
     <main className="min-h-screen">
@@ -47,41 +47,87 @@ export default function RefundPolicyPage() {
           <h1 className="mb-4 text-4xl font-bold tracking-tight">Refund Policy</h1>
           <p className="text-muted-foreground mb-8">Last updated: {lastUpdated}</p>
 
-          <div className="space-y-6">
-            <p className="text-muted-foreground">
-              All payments for Snappit are processed through Paddle, which acts as the Merchant of
-              Record. As such, refund eligibility and processing are determined by Paddle in
-              accordance with Paddle&apos;s refund policy.
-            </p>
+          <div className="space-y-8">
+            <section>
+              <p className="text-muted-foreground">
+                All payments for Snappit are processed through Paddle, which acts as the Merchant of
+                Record. This refund policy is in accordance with{" "}
+                <a
+                  href="https://www.paddle.com/legal/checkout-buyer-terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-product hover:underline"
+                >
+                  Paddle&apos;s Checkout Buyer Terms
+                </a>
+                .
+              </p>
+            </section>
 
-            <p className="text-muted-foreground">
-              Paddle&apos;s refund policy applies to all purchases made through their platform. For
-              details on Paddle&apos;s refund terms, please refer to{" "}
-              <a
-                href="https://www.paddle.com/legal/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-product hover:underline"
-              >
-                Paddle&apos;s Terms of Service
-              </a>
-              .
-            </p>
+            <section>
+              <h2 className="mb-4 text-xl font-semibold">1. Minimum 14-Day Refund Policy</h2>
+              <p className="text-muted-foreground">
+                In accordance with Paddle&apos;s Checkout Buyer Terms, all purchases of Snappit are
+                covered by a minimum 14-day refund policy. Customers may request a refund within at
+                least 14 days from the date of purchase.
+              </p>
+            </section>
 
-            <p className="text-muted-foreground">
-              If you are unsure about purchasing, we encourage you to try the free trial version,
-              which provides full functionality with a limit of 150 uses so you can evaluate whether
-              Snappit meets your needs before making a purchase.
-            </p>
+            <section>
+              <h2 className="mb-4 text-xl font-semibold">2. How to Request a Refund</h2>
+              <p className="text-muted-foreground">
+                To request a refund, please use Paddle&apos;s Order Support at{" "}
+                <a
+                  href="https://paddle.net"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-product hover:underline"
+                >
+                  paddle.net
+                </a>
+                . Refunds will be processed using the same payment method used for the original
+                purchase.
+              </p>
+            </section>
 
-            <p className="text-muted-foreground">
-              If you experience technical issues or believe you were charged in error, please
-              contact our support team at{" "}
-              <a href="mailto:support@getsnappit.com" className="text-product hover:underline">
-                support@getsnappit.com
-              </a>{" "}
-              and we assist you where appropriate.
-            </p>
+            <section>
+              <h2 className="mb-4 text-xl font-semibold">3. Refund Processing</h2>
+              <p className="text-muted-foreground">
+                Once your refund request is approved, Paddle will process the reimbursement in
+                accordance with their Buyer Terms.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 text-xl font-semibold">4. Limitations</h2>
+              <p className="text-muted-foreground">
+                Refund requests may be refused in cases of fraud, refund abuse, or other
+                manipulative behavior, in line with Paddle&apos;s policies.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 text-xl font-semibold">5. Try Before You Buy</h2>
+              <p className="text-muted-foreground">
+                If you are unsure about purchasing, we encourage you to try the free trial version,
+                which provides full functionality with a limit of 150 uses so you can evaluate
+                whether Snappit meets your needs before making a purchase.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 text-xl font-semibold">6. Contact Us</h2>
+              <p className="text-muted-foreground">
+                If you have any questions about this refund policy or need assistance, please
+                contact us:
+              </p>
+              <p className="text-muted-foreground mt-4">
+                Email:{" "}
+                <a href="mailto:support@getsnappit.com" className="text-product hover:underline">
+                  support@getsnappit.com
+                </a>
+              </p>
+            </section>
           </div>
         </div>
       </section>
