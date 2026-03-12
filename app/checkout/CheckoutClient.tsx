@@ -34,7 +34,7 @@ export function CheckoutClient(props: CheckoutClientProps) {
   useEffect(() => {
     if (!props.paddleClientToken || !props.paddlePriceId) {
       setCheckoutError(
-        "Checkout is not configured. Set PADDLE_CLIENT_TOKEN and PADDLE_PRICE_ID_FULL_LICENSE.",
+        "Checkout is not configured. Set NEXT_PUBLIC_PADDLE_CLIENT_TOKEN and NEXT_PUBLIC_PADDLE_PRICE_ID_FULL_LICENSE.",
       );
       return;
     }

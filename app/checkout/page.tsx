@@ -10,9 +10,9 @@ export const metadata = {
 };
 
 export default function CheckoutPage() {
-  const paddleEnv = process.env.PADDLE_ENV ?? "production";
-  const paddleClientToken = process.env.PADDLE_CLIENT_TOKEN ?? "";
-  const paddlePriceId = process.env.PADDLE_PRICE_ID_FULL_LICENSE ?? "";
+  const paddleEnv = process.env.NEXT_PUBLIC_PADDLE_ENV ?? "production";
+  const paddleClientToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
+  const paddlePriceId = process.env.NEXT_PUBLIC_PADDLE_PRICE_ID_FULL_LICENSE ?? "";
 
   return (
     <main className="min-h-screen">
