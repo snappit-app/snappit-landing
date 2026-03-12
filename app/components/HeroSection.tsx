@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export function HeroSection() {
   return (
@@ -43,12 +44,12 @@ export function HeroSection() {
             </svg>
             Download for macOS
           </a>
-          <a
-            href="#buy"
+          <Link
+            href="/checkout?source=landing_hero"
             className="bg-product text-product-foreground hover:bg-product/90 inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-medium transition-colors"
           >
             Buy Full License — $7.99
-          </a>
+          </Link>
         </div>
 
         {/* Intel download link */}

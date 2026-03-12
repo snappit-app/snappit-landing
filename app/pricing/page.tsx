@@ -144,12 +144,12 @@ export default function PricingPage() {
                   <span className="text-sm">Support independent development</span>
                 </li>
               </ul>
-              <a
-                href="#buy"
+              <Link
+                href="/checkout?source=landing_pricing"
                 className="bg-product text-product-foreground hover:bg-product/90 inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-base font-medium transition-colors"
               >
                 Buy Full License
-              </a>
+              </Link>
             </div>
           </div>
 
